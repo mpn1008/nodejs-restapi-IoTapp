@@ -27,10 +27,9 @@ exports.new = function(req, res){
     const client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
         const collection = client.db("unipj").collection("accels");
-        console.log('connected');
+        console.log('connected'); 
         collection.insertOne(req.body, function(err, res) {
             if (err) throw err;
-            console.log(req.body);
           });
         client.close();
       });
