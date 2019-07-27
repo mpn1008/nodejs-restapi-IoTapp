@@ -7,7 +7,7 @@ let routes = require('./routes');
 app.use(bodyParse.urlencoded({extended:true}));
 app.use(bodyParse.json());
 
-app.get('/', (req, res) => res.send('Hello World with Express'));
+app.get('/', (req, res) => res.send("Phuong's rest webservice"));
 app.use('/api', routes);
 
 app.listen(port, function () {
