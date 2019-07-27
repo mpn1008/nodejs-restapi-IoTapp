@@ -3,7 +3,7 @@ let app = express();
 let port = process.env.PORT || 3000;
 let bodyParse = require('body-parser');
 let routes = require('./routes');
-require('./db');
+
 app.use(bodyParse.urlencoded({extended:true}));
 app.use(bodyParse.json());
 

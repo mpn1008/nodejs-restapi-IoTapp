@@ -10,6 +10,6 @@ let aCtrl = require('./accelController');
 // Contact routes
 router.route('/accels')
     .get(aCtrl.index)
-   // .post(aCtrl.new);
+    .post(aCtrl.new);
 
 module.exports = router;
