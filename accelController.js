@@ -7,7 +7,7 @@ const uri = "mongodb+srv://phuong01:12345@fptclus-vezuu.gcp.mongodb.net/test?ret
 exports.index = function (req, res) {
     const client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
-        const collection = client.db("unipj").collection("accels");
+        const collection = client.db("unipj").collection("sensordata");
         console.log('connected');
        
         collection.find({}).toArray(function(err, result) {
@@ -23,7 +23,7 @@ exports.index = function (req, res) {
 exports.new = function(req, res){
     const client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
-        const collection = client.db("unipj").collection("accels");
+        const collection = client.db("unipj").collection("sensordata");
         console.log('connected'); 
         collection.insertOne(req.body, function(err, res) {
             if (err) throw err;
