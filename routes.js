@@ -5,3 +5,4 @@ router.route('/accels')
     .get(aCtrl.index)
     .post(aCtrl.new);
 module.exports = router;
+
