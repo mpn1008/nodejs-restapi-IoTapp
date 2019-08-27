@@ -23,7 +23,7 @@ exports.index = function (req, res) {
 exports.new = function(req, res){
     const client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
-        const collection = client.db("unipj").collection("sensordata");
+        const collection = client.db("unipj").collection("sensordatas");
         console.log('connected'); 
         collection.insertOne(req.body, function(err, res) {
             if (err) throw err;
