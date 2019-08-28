@@ -19,7 +19,7 @@ const uri = "mongodb+srv://phuong01:12345@fptclus-vezuu.gcp.mongodb.net/test?ret
        client.close();
       });
 }*/
-exports.index = async function find() {
+exports.index = async function(req,res) {
 
   const client = await MongoClient.connect(url, { useNewUrlParser: true })
       .catch(err => { console.log(err); });
