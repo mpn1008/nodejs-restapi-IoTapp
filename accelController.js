@@ -10,7 +10,7 @@ exports.index = async function (req, res) {
     client.connect(err => {
         const collection = client.db("unipj").collection("sensordatas");
         console.log('connected');
-        collection.find({}).toArray(function(err, result) {
+        await collection.find({}).toArray(function(err, result) {
             if (err) throw err;
             console.log(result);
             res.json(result);
