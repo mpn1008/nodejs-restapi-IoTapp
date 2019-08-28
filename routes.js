@@ -1,6 +1,6 @@
 let router = require('express').Router();
 let aCtrl = require('./accelController');
-// Contact routes
+
 router.route('/sensordatas')
     .get(aCtrl.index)
     .post(aCtrl.new);
