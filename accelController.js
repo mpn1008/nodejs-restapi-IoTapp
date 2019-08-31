@@ -33,24 +33,39 @@ exports.index = async function(req, res){
   let client;
 
   try {
-    client = await MongoClient.connect(uri);
-    console.log("Connected correctly to server");
-
+    await MongoClient.connect(uri, async function(err,client){
+      console.log("Connected correctly to server");
+    assert.equal(null,err);
     const db = client.db('unipj');
     const col = db.collection('sensordatas');
     const docs = await col.find({}).toArray(function(err, result) {
       if (err) throw err;
       console.log(result);
       res.json(result);
+    });
+    
   });
     //assert.equal(2, docs.length);
   } catch (err) {
     console.log(err.stack);
   }
-
   // Close connection
-  // await client.close();
+  await client.close();
 }
+/*MongoClient.connect(url, async function(err, client) {
+  assert.equal(null, err);
+  console.log('successfully connected to mongoDB server: ' + url);
+
+  const db = client.db('unipj');
+  try{
+    var senateInsert = await waitInsert(db, 'senate');
+  }
+  catch(err) {
+    console.log(err);
+  }
+  console.log('closing database connection');
+  client.close();
+})*/
 /*module.exports = {
   myFunction: async (query) => {
     let db, client;
