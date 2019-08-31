@@ -43,9 +43,7 @@ exports.index = async function(req, res){
       console.log(result);
       res.json(result);
     });
-    
   });
-    //assert.equal(2, docs.length);
   } catch (err) {
     console.log(err.stack);
   }
