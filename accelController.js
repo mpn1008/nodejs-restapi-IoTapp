@@ -1,18 +1,21 @@
-const mongoose = require('mongoose')
-const MongoClient = require('mongodb').MongoClient;
-var async = require("async");
-var assert = require('assert')
+let mongoose = require('mongoose');
+let MongoClient = require('mongodb').MongoClient;
+let async = require("async");
+let assert = require('assert');
 
-const uri = "mongodb+srv://phuong01:12345@fptclus-vezuu.gcp.mongodb.net/test?retryWrites=true&w=majority";
+
+
+
+const uri = "mongodb+srv://phuong01:12345@fptclus-vezuu.gcp.mongodb.net/unipj?retryWrites=true&w=majority";
 
 mongoose.connect(uri,{ useNewUrlParser: true});
 var db = mongoose.connection;
 
 // Added check for DB connection
 if(!db)
-    console.log("Error connecting db")
+    console.log("Error connecting db");
 else
-    console.log("Db connected successfully")
+    console.log("Db connected successfully");
 
 //GET all elements from the database
 /*exports.index = function (req, res) {
@@ -29,11 +32,21 @@ else
        client.close();
       });
 }*/
+var accelSchema = new mongoose.Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+  accel:Number,
+  dateCreated: { 
+     type: Date,
+     default: Date.now()
+  }
+}, {versionKey: false});
+
+var accelModel = mongoose.model('sensordatas', accelSchema);
+
 exports.index = async function(req, res){
   let client;
-
   try {
-    await MongoClient.connect(uri, async function(err,client){
+    await MongoClient.connect(uri,{ useNewUrlParser: true }, async function(err,client){
       console.log("Connected correctly to server");
     assert.equal(null,err);
     const db = client.db('unipj');
@@ -50,47 +63,29 @@ exports.index = async function(req, res){
   // Close connection
   await client.close();
 }
-/*MongoClient.connect(url, async function(err, client) {
-  assert.equal(null, err);
-  console.log('successfully connected to mongoDB server: ' + url);
-
-  const db = client.db('unipj');
-  try{
-    var senateInsert = await waitInsert(db, 'senate');
-  }
-  catch(err) {
-    console.log(err);
-  }
-  console.log('closing database connection');
-  client.close();
-})*/
-/*module.exports = {
-  myFunction: async (query) => {
-    let db, client;
-    try {
-      client = await MongoClient.connect(uri, { useNewUrlParser: true });
-      db = client.db('unipj');
-      return await db.collection('sensordatas').find({}).toArray()
-    } finally {
-      client.close();
-    }
-  }
-}*/
-/*exports.index = function(req , res){
-  var result = myFunction();
-  console.log(JSON.stringify(result))
-  res.send = JSON.stringify(result)
-}*/
 
 exports.new = function(req, res){
-    const client = new MongoClient(uri, { useNewUrlParser: true });
-    client.connect(err => {
+   // const client = new MongoClient(uri, { useNewUrlParser: true });
+   /* client.connect(err => {
         const collection = client.db("unipj").collection("sensordatas");
         console.log('connected'); 
         collection.insertOne(req.body, function(err, res) {
             if (err) throw err;
-          });
+        });
         client.close();
+      });*/
+     // var obj = JSON.parse(req.body);
+     // console.log(req.body);
+      var accelData = new accelModel({
+        _id: new mongoose.Types.ObjectId(),
+        accel: req.body.accel,
+      });
+      accelData.save(function(err){
+          if (err) throw err;
+          console.log("Data added");
+          res.json({
+            'message' : "data added successfully"
+          })
       });
 }
 
