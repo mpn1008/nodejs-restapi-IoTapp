@@ -1,11 +1,6 @@
 let mongoose = require('mongoose');
 let MongoClient = require('mongodb').MongoClient;
 let async = require("async");
-let assert = require('assert');
-
-
-
-
 const uri = "mongodb+srv://phuong01:12345@fptclus-vezuu.gcp.mongodb.net/unipj?retryWrites=true&w=majority";
 
 mongoose.connect(uri,{ useNewUrlParser: true});
@@ -48,7 +43,7 @@ exports.index = async function(req, res){
   try {
     await MongoClient.connect(uri,{ useNewUrlParser: true }, async function(err,client){
       console.log("Connected correctly to server");
-    assert.equal(null,err);
+   // assert.equal(null,err);
     const db = client.db('unipj');
     const col = db.collection('sensordatas');
     const docs = await col.find({}).toArray(function(err, result) {
@@ -65,17 +60,6 @@ exports.index = async function(req, res){
 }
 
 exports.new = function(req, res){
-   // const client = new MongoClient(uri, { useNewUrlParser: true });
-   /* client.connect(err => {
-        const collection = client.db("unipj").collection("sensordatas");
-        console.log('connected'); 
-        collection.insertOne(req.body, function(err, res) {
-            if (err) throw err;
-        });
-        client.close();
-      });*/
-     // var obj = JSON.parse(req.body);
-     // console.log(req.body);
       var accelData = new accelModel({
         _id: new mongoose.Types.ObjectId(),
         accel: req.body.accel,
@@ -88,5 +72,4 @@ exports.new = function(req, res){
           })
       });
 }
-
 
